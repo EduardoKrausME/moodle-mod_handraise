@@ -1,0 +1,24 @@
+.mod-handraise {
+    max-width: 920px;
+    margin-inline: auto;
+}
+
+.mod-handraise-student .card-body {
+    background: var(--bs-tertiary-bg, #f8f9fa);
+}
+
+.mod-handraise-position {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: 0 0 2.5rem;
+    border-radius: 50%;
+    background: var(--bs-secondary-bg, #e9ecef);
+    font-weight: 700;
+}
+
+.mod-handraise .min-width-0 {
+    min-width: 0;
+}
