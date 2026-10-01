@@ -24,6 +24,7 @@
 
 namespace mod_handraise;
 
+use advanced_testcase;
 use context_module;
 use mod_handraise\queue_manager;
 
@@ -35,7 +36,7 @@ use mod_handraise\queue_manager;
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @coversDefaultClass \mod_handraise\local\queue_manager
  */
-final class queue_manager_test extends \advanced_testcase {
+final class queue_manager_test extends advanced_testcase {
     /**
      * Tests that the queue preserves the request order.
      *

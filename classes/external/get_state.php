@@ -31,6 +31,7 @@ use core_external\external_multiple_structure;
 use core_external\external_single_structure;
 use core_external\external_value;
 use mod_handraise\queue_manager;
+use required_capability_exception;
 
 /**
  * Class get_state.
@@ -64,7 +65,7 @@ class get_state extends external_api {
         $canraise = has_capability("mod/handraise:raisehand", $context);
         $canmanage = has_capability("mod/handraise:managequeue", $context);
         if (!$canraise && !$canmanage) {
-            throw new \required_capability_exception($context, "mod/handraise:raisehand", "nopermissions", "");
+            throw new required_capability_exception($context, "mod/handraise:raisehand", "nopermissions", "");
         }
 
         return (new queue_manager())->get_state($cm, $context, $USER->id);

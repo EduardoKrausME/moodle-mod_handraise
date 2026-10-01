@@ -21,16 +21,16 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(["jquery", "core/ajax", "core/notification"], function($, Ajax, Notification) {
-    const getString = function(key) {
+define(["jquery", "core/ajax", "core/notification"], function ($, Ajax, Notification) {
+    const getString = function (key) {
         return M.util.get_string(key, "mod_handraise");
     };
 
-    const formatString = function(key, value) {
+    const formatString = function (key, value) {
         return getString(key).replace("{$a}", value);
     };
 
-    const renderStudent = function(root, state) {
+    const renderStudent = function (root, state) {
         const button = root.find('[data-action="toggle-hand"]');
         if (!button.length) {
             return;
@@ -51,7 +51,7 @@ define(["jquery", "core/ajax", "core/notification"], function($, Ajax, Notificat
         status.find('[data-region="queue-count"]').text(formatString("queuecountlabel", state.queuecount));
     };
 
-    const renderTeacher = function(root, state) {
+    const renderTeacher = function (root, state) {
         const list = root.find('[data-region="queue-list"]');
         if (!list.length) {
             return;
@@ -69,7 +69,7 @@ define(["jquery", "core/ajax", "core/notification"], function($, Ajax, Notificat
         list.removeClass("d-none");
         root.find('[data-region="empty-queue"]').addClass("d-none");
 
-        state.queue.forEach(function(item) {
+        state.queue.forEach(function (item) {
             const row = $("<div>", {
                 class: "list-group-item d-flex align-items-center gap-3 py-3",
                 "data-queue-id": item.id,
@@ -102,19 +102,19 @@ define(["jquery", "core/ajax", "core/notification"], function($, Ajax, Notificat
         });
     };
 
-    const render = function(root, state) {
+    const render = function (root, state) {
         renderStudent(root, state);
         renderTeacher(root, state);
     };
 
-    const call = function(methodname, args) {
+    const call = function (methodname, args) {
         return Ajax.call([{
             methodname: methodname,
             args: args,
         }])[0];
     };
 
-    const init = function(config) {
+    const init = function (config) {
         const root = $('[data-region="handraise-root"][data-cmid="' + config.cmid + '"]');
         if (!root.length) {
             return;
@@ -123,37 +123,37 @@ define(["jquery", "core/ajax", "core/notification"], function($, Ajax, Notificat
         let busy = false;
         let stopped = false;
 
-        const refresh = function() {
+        const refresh = function () {
             if (busy || stopped || document.hidden) {
                 return;
             }
             call("mod_handraise_get_state", {cmid: config.cmid})
-                .then(function(state) {
+                .then(function (state) {
                     render(root, state);
                     return state;
                 })
                 .catch(Notification.exception);
         };
 
-        root.on("click", '[data-action="toggle-hand"]', function() {
+        root.on("click", '[data-action="toggle-hand"]', function () {
             if (busy) {
                 return;
             }
             busy = true;
             const button = $(this).prop("disabled", true);
             call("mod_handraise_toggle_hand", {cmid: config.cmid})
-                .then(function(state) {
+                .then(function (state) {
                     render(root, state);
                     return state;
                 })
                 .catch(Notification.exception)
-                .then(function() {
+                .then(function () {
                     busy = false;
                     button.prop("disabled", false);
                 });
         });
 
-        root.on("click", '[data-action="serve"]', function() {
+        root.on("click", '[data-action="serve"]', function () {
             if (busy) {
                 return;
             }
@@ -163,23 +163,23 @@ define(["jquery", "core/ajax", "core/notification"], function($, Ajax, Notificat
                 cmid: config.cmid,
                 queueid: Number(button.attr("data-queue-id")),
             })
-                .then(function(state) {
+                .then(function (state) {
                     render(root, state);
                     return state;
                 })
                 .catch(Notification.exception)
-                .then(function() {
+                .then(function () {
                     busy = false;
                     button.prop("disabled", false);
                 });
         });
 
         const timer = window.setInterval(refresh, Math.max(1000, config.pollinterval || 2000));
-        $(window).on("beforeunload.mod_handraise", function() {
+        $(window).on("beforeunload.mod_handraise", function () {
             stopped = true;
             window.clearInterval(timer);
         });
-        document.addEventListener("visibilitychange", function() {
+        document.addEventListener("visibilitychange", function () {
             if (!document.hidden) {
                 refresh();
             }

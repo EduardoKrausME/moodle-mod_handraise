@@ -27,6 +27,9 @@ namespace mod_handraise;
 use context_module;
 use core_user\fields;
 use dml_write_exception;
+use mod_handraise\event\hand_lowered;
+use mod_handraise\event\hand_raised;
+use mod_handraise\event\hand_served;
 use stdClass;
 
 /**
@@ -102,7 +105,7 @@ class queue_manager {
 
         if ($existing) {
             $DB->delete_records("handraise_queue", ["id" => $existing->id]);
-            \mod_handraise\event\hand_lowered::create([
+            hand_lowered::create([
                 "objectid" => $existing->id,
                 "context" => $context,
                 "relateduserid" => $userid,
@@ -130,7 +133,7 @@ class queue_manager {
             }
         }
 
-        \mod_handraise\event\hand_raised::create([
+        hand_raised::create([
             "objectid" => $record->id,
             "context" => $context,
             "relateduserid" => $userid,
@@ -159,7 +162,7 @@ class queue_manager {
         ], "*", MUST_EXIST);
 
         $DB->delete_records("handraise_queue", ["id" => $record->id]);
-        \mod_handraise\event\hand_served::create([
+        hand_served::create([
             "objectid" => $record->id,
             "context" => $context,
             "userid" => $teacherid,

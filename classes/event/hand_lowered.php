@@ -24,10 +24,13 @@
 
 namespace mod_handraise\event;
 
+use core\event\base;
+use moodle_url;
+
 /**
  * Class hand_lowered.
  */
-class hand_lowered extends \core\event\base {
+class hand_lowered extends base {
     /**
      * Method init.
      *
@@ -61,9 +64,9 @@ class hand_lowered extends \core\event\base {
     /**
      * Method get_url.
      *
-     * @return \moodle_url Return value.
+     * @return moodle_url Return value.
      */
-    public function get_url(): \moodle_url {
-        return new \moodle_url("/mod/handraise/view.php", ["id" => $this->contextinstanceid]);
+    public function get_url(): moodle_url {
+        return new moodle_url("/mod/handraise/view.php", ["id" => $this->contextinstanceid]);
     }
 }
