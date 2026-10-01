@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 $functions = [
     "mod_handraise_get_state" => [
         "classname" => "mod_handraise\\external\\get_state",
+        "methodname" => "execute",
         "description" => "Returns the current Hand raise queue state.",
         "type" => "read",
         "ajax" => true,
@@ -34,6 +35,7 @@ $functions = [
     ],
     "mod_handraise_toggle_hand" => [
         "classname" => "mod_handraise\\external\\toggle_hand",
+        "methodname" => "execute",
         "description" => "Raises or lowers the current user's hand.",
         "type" => "write",
         "ajax" => true,
@@ -41,6 +43,7 @@ $functions = [
     ],
     "mod_handraise_serve" => [
         "classname" => "mod_handraise\\external\\serve",
+        "methodname" => "execute",
         "description" => "Removes one participant from the Hand raise queue.",
         "type" => "write",
         "ajax" => true,
