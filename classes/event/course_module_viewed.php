@@ -15,45 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Hand raise activity module implementation.
+ * Course module viewed event for the Hand raise activity.
  *
  * @package mod_handraise
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot . '/mod/handraise/backup/moodle2/backup_handraise_stepslib.php');
+namespace mod_handraise\event;
 
 /**
- * Backup task for the Hand raise activity.
+ * Course module viewed event.
  */
-class backup_handraise_activity_task extends backup_activity_task {
+class course_module_viewed extends \core\event\course_module_viewed {
     /**
-     * Method define_my_settings.
+     * Initialises the event.
      *
-     * @return void Return value.
+     * @return void
      */
-    protected function define_my_settings(): void {
+    protected function init(): void {
+        $this->data["objecttable"] = "handraise";
+        $this->data["crud"] = "r";
+        $this->data["edulevel"] = self::LEVEL_PARTICIPATING;
     }
 
     /**
-     * Method define_my_steps.
+     * Returns the restore mapping for the object id.
      *
-     * @return void Return value.
+     * @return array
      */
-    protected function define_my_steps(): void {
-        $this->add_step(new backup_handraise_activity_structure_step("handraise_structure", "handraise.xml"));
-    }
-
-    /**
-     * Method encode_content_links.
-     *
-     * @param mixed $content Parameter content.
-     * @return string Return value.
-     */
-    public static function encode_content_links($content): string {
-        return $content;
+    public static function get_objectid_mapping(): array {
+        return ["db" => "handraise", "restore" => "handraise"];
     }
 }

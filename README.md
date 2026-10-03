@@ -1,20 +1,28 @@
-# mod_handraise - Levantar a mão
+# mod_handraise - Hand raise
 
-Atividade Moodle para organizar pedidos de fala em sala ou em encontros síncronos.
+Moodle activity for organising requests to speak during classroom sessions or synchronous meetings.
 
-## Fluxo
+## How it works
 
-- o aluno abre a atividade e clica em **Preciso falar**;
-- o pedido entra na fila por ordem de chegada;
-- o aluno vê sua posição e pode cancelar o pedido;
-- o professor vê os nomes em ordem, com horário e tempo de espera;
-- ao clicar em **Atendido**, o professor remove aquela pessoa da fila;
-- a tela atualiza automaticamente por AJAX, sem recarregar a página.
+- the student opens the activity and clicks **I need to speak**;
+- the request enters the queue in arrival order;
+- the student can see their own position and cancel the request;
+- the teacher sees the queued participants in order, including the request time and waiting time;
+- when the teacher clicks **Served**, that participant is removed from the queue;
+- the interface refreshes automatically through AJAX without reloading the page.
 
-## Privacidade e segurança
+## Main use cases
 
-Alunos não recebem os nomes da fila pela API; veem apenas a própria posição e o total de pessoas aguardando. Professores
-com a capability `mod/handraise:managequeue` recebem a fila nominal.
+Hand raise is useful in live classes, tutoring sessions, webinars, workshops and other synchronous activities where several participants may request attention at the same time. It gives the teacher a simple first-in, first-out queue while keeping the student interface compact.
 
-As ações usam External Functions do Moodle com validação de contexto e capabilities. A atividade também integra com a
-Privacy API, backup e restauração e reset do curso.
+## Permissions
+
+Students use the `mod/handraise:raisehand` capability to join or leave the queue. Teachers and other authorised users use `mod/handraise:managequeue` to view the named queue and mark requests as served.
+
+## Privacy and security
+
+Students do not receive the names of other queued users through the API; they only see their own position and the total number of people waiting. Users with `mod/handraise:managequeue` can access the named queue.
+
+Actions use Moodle External Functions with context and capability validation. The activity also integrates with the Privacy API, course backup and restore, completion tracking, course logs and course reset.
+
+A Portuguese version of this documentation is available in [README.pt_br.md](README.pt_br.md).

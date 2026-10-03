@@ -69,4 +69,24 @@ class hand_raised extends base {
     public function get_url(): moodle_url {
         return new moodle_url("/mod/handraise/view.php", ["id" => $this->contextinstanceid]);
     }
+
+    /**
+     * Returns the restore mapping for the queue object.
+     *
+     * @return array
+     */
+    public static function get_objectid_mapping(): array {
+        return ["db" => "handraise_queue", "restore" => base::NOT_MAPPED];
+    }
+
+    /**
+     * Returns restore mappings for values stored in other.
+     *
+     * @return array
+     */
+    public static function get_other_mapping(): array {
+        return [
+            "handraiseid" => ["db" => "handraise", "restore" => "handraise"],
+        ];
+    }
 }

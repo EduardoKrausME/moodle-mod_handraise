@@ -24,6 +24,7 @@
 
 require_once(__DIR__ . "/../../config.php");
 
+use mod_handraise\event\course_module_viewed;
 use mod_handraise\queue_manager;
 
 $id = required_param("id", PARAM_INT);
@@ -39,6 +40,14 @@ $canmanage = has_capability("mod/handraise:managequeue", $context);
 if (!$canraise && !$canmanage) {
     throw new required_capability_exception($context, "mod/handraise:raisehand", "nopermissions", "");
 }
+
+$event = course_module_viewed::create([
+    "objectid" => $handraise->id,
+    "context" => $context,
+]);
+$event->add_record_snapshot("course", $course);
+$event->add_record_snapshot("handraise", $handraise);
+$event->trigger();
 
 $PAGE->set_url("/mod/handraise/view.php", ["id" => $cm->id]);
 $PAGE->set_title(format_string($handraise->name));

@@ -21,6 +21,14 @@
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/mod/handraise/backup/moodle2/restore_handraise_stepslib.php');
+
+/**
+ * Restore task for the Hand raise activity.
+ */
 class restore_handraise_activity_task extends restore_activity_task {
     /**
      * Method define_my_settings.
