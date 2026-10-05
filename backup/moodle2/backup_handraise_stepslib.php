@@ -39,7 +39,7 @@ class backup_handraise_activity_structure_step extends backup_activity_structure
 
         $handraise->set_source_table("handraise", ["id" => backup::VAR_ACTIVITYID]);
         if ($this->get_setting_value("userinfo")) {
-            $entry->set_source_table("handraise_queue", ["handraiseid" => backup::VAR_ACTIVITYID]);
+            $entry->set_source_table("handraise_queue", ["handraiseid" => backup::VAR_PARENTID]);
             $entry->annotate_ids("user", "userid");
         }
 
